@@ -1,0 +1,16 @@
+{
+    "name": "vstar",
+    "version": "1.0.0",
+    "description": "",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron .",
+        "build-win": "electron-builder --win"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "electron": "^42.2.0"
+    }
+}
