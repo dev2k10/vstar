@@ -1,16 +1,155 @@
 <!doctype html>
-<html>
+<html lang="vi">
     <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            http-equiv="Content-Security-Policy"
+            content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data:; img-src 'self' data: https:;"
+        />
+        <title>VStar Browser</title>
         <link rel="stylesheet" href="style.css" />
     </head>
-
     <body>
-        <div id="topbar">
-            <input id="url" placeholder="Nhập URL" />
-            <button onclick="go()">Go</button>
-        </div>
+        <!-- ═══════════════════════════════════════════════
+       TITLEBAR: drag region + tabs + window controls
+  ═══════════════════════════════════════════════ -->
+        <div id="titlebar">
+            <!-- Logo / App Icon -->
+            <div class="tb-left">
+                <div class="app-icon" title="VStar Browser"></div>
+                <span class="app-name">VStar</span>
+            </div>
 
-        <webview id="browser" src="https://google.com" allowpopups> </webview>
+            <!-- Tab bar -->
+            <div class="tabs" id="tabBar">
+                <div class="tab active" data-tab-id="1">
+                    <div class="tab-favicon"></div>
+                    <span class="tab-title">New Tab</span>
+                    <button class="tab-close" title="Đóng tab">×</button>
+                </div>
+                <button class="tab-add" id="newTab" title="Mở tab mới">
+                    +
+                </button>
+            </div>
+
+            <!-- Window controls -->
+            <div class="controls" id="windowControls">
+                <button id="min" class="ctrl-btn" title="Thu nhỏ">
+                    &#x2212;
+                </button>
+                <button id="max" class="ctrl-btn" title="Phóng to">
+                    &#x25A1;
+                </button>
+                <button id="close" class="ctrl-btn close-btn" title="Đóng">
+                    &#x2715;
+                </button>
+            </div>
+        </div>
+        <!-- /#titlebar -->
+
+        <!-- ═══════════════════════════════════════════════
+       TOOLBAR: nav buttons + address bar + menu
+  ═══════════════════════════════════════════════ -->
+        <div id="toolbar">
+            <div class="nav-buttons">
+                <button id="back" class="nav-btn" title="Quay lại">
+                    &#9664;
+                </button>
+                <button id="forward" class="nav-btn" title="Tiến lên">
+                    &#9654;
+                </button>
+                <button
+                    id="reload"
+                    class="nav-btn spin-on-click"
+                    title="Tải lại"
+                >
+                    &#8635;
+                </button>
+                <button id="home" class="nav-btn" title="Trang chủ">
+                    &#8962;
+                </button>
+            </div>
+
+            <div class="address-bar-wrap">
+                <span class="lock-icon">&#128274;</span>
+                <input
+                    id="url"
+                    type="text"
+                    class="address-bar"
+                    placeholder="Search or enter address…"
+                    autocomplete="off"
+                    spellcheck="false"
+                />
+            </div>
+
+            <div class="toolbar-actions">
+                <button id="devtools" class="nav-btn" title="DevTools">
+                    &#x2692;
+                </button>
+                <button id="menu" class="nav-btn" title="Menu">&#x22EE;</button>
+            </div>
+        </div>
+        <!-- /#toolbar -->
+
+        <!-- ═══════════════════════════════════════════════
+       CONTENT: new-tab page + webview
+  ═══════════════════════════════════════════════ -->
+        <div id="content">
+            <!-- Trang New Tab (hiển thị khi chưa điều hướng) -->
+            <div id="newTabPage" class="visible">
+                <div class="nt-logo">
+                    <div class="nt-icon"></div>
+                    <span>VSTAR BROWSER</span>
+                </div>
+                <div class="search-wrap">
+                    <input
+                        id="searchInput"
+                        type="text"
+                        placeholder="Search the web…"
+                        autocomplete="off"
+                    />
+                    <button id="searchBtn">&#x1F50D;</button>
+                </div>
+                <div class="nt-shortcuts">
+                    <!-- Các shortcut phổ biến -->
+                    <a class="shortcut" href="#" data-url="https://google.com">
+                        <div class="sc-icon g-icon">G</div>
+                        <span>Google</span>
+                    </a>
+                    <a class="shortcut" href="#" data-url="https://youtube.com">
+                        <div class="sc-icon y-icon">▶</div>
+                        <span>YouTube</span>
+                    </a>
+                    <a class="shortcut" href="#" data-url="https://github.com">
+                        <div class="sc-icon gh-icon">⌥</div>
+                        <span>GitHub</span>
+                    </a>
+                    <a class="shortcut" href="#" data-url="https://reddit.com">
+                        <div class="sc-icon r-icon">r/</div>
+                        <span>Reddit</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- WebView nhúng trang web -->
+            <webview
+                id="webview"
+                src="about:blank"
+                partition="persist:default"
+                allowpopups
+                webpreferences="contextIsolation=yes"
+            >
+            </webview>
+        </div>
+        <!-- /#content -->
+
+        <!-- ═══════════════════════════════════════════════
+       STATUS BAR
+  ═══════════════════════════════════════════════ -->
+        <div id="statusBar">
+            <span id="statusText"></span>
+        </div>
 
         <script src="app.js"></script>
     </body>
